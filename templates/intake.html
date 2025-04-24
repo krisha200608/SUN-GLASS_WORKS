@@ -120,7 +120,7 @@
   <h2>Intake form</h2>
   <p>Help us serve you better</p>
 
-  <form>
+  <form id='intake form'>
     <label for="name">Name <span class="required">*</span></label>
     <input type="text" id="name" name="name" placeholder="" required>
 
@@ -143,29 +143,38 @@
     <button type="submit" class="submit-button">SUBMIT</button>
   </form>
   <script>
-    const webhookURL = "https://discord.com/api/webhooks/1364875421744758896/pUncFYJ5hnmjKuqrvpeJjfiYpFiep3totEVVYLH3SzBK96FFPWogq2jay7P-yb8SM9dE"; // Replace with your actual webhook URL
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById('intakeForm');
 
-    document.getElementById('intakeForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
 
-      const data = {
-        username: "New Intake Form",
-        content: `
+        const data = {
+          username: "New Intake Form",
+          content: `
   **Name:** ${document.getElementById('name').value}
   **Phone:** ${document.getElementById('phone').value}
   **Description:** ${document.getElementById('description').value || "N/A"}
   **Address:** ${document.getElementById('address').value}
   **In-house Service:** ${document.getElementById('inhouse').checked ? "Yes" : "No"}
-        `
-      };
+          `
+        };
 
-      fetch(webhookURL, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data)
-      }).then(() => alert("Submitted! We'll get back to you soon."));
+        fetch("https://discord.com/api/webhooks/1364875421744758896/pUncFYJ5hnmjKuqrvpeJjfiYpFiep3totEVVYLH3SzBK96FFPWogq2jay7P-yb8SM9dE", {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        }).then(() => {
+          alert("Submitted! We'll get back to you soon.");
+          form.reset();
+        }).catch(err => {
+          console.error("Submission failed:", err);
+          alert("There was an error. Please try again.");
+        });
+      });
     });
   </script>
+
 </section>
 
 </body>
