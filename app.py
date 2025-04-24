@@ -1,15 +1,39 @@
-from flask import Flask, render_template 
+
+from flask import Flask, render_template
+import psycopg2
+from dotenv import load_dotenv
+import os
+
+# Load environment variables
+load_dotenv('database.env')
+DATABASE_URL = os.getenv('DATABASE_URL')
 
 app = Flask(__name__)
 
+# Database connection function
+def get_db_connection():
+    conn = psycopg2.connect(DATABASE_URL)
+    return conn
+
 @app.route("/")
 def hello_world():
+    # Test database connection
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT version();')
+        db_version = cur.fetchone()
+        print(f"Database connected successfully: {db_version}")
+        cur.close()
+        conn.close()
+    except Exception as e:
+        print(f"Database connection failed: {e}")
+    
     return render_template("home.html")
 
 @app.route("/intake")
 def intake():
-    return render_template("intake.html")  # use correct folder path
+    return render_template("intake.html")
 
-
-app.run(host='0.0.0.0', debug=True)
-    
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=True)
