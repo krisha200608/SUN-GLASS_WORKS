@@ -17,19 +17,22 @@ def get_db_connection():
 
 @app.route("/")
 def hello_world():
+    connection_status = "Not Connected"
+    db_version = None
     # Test database connection
     try:
         conn = get_db_connection()
         cur = conn.cursor()
         cur.execute('SELECT version();')
         db_version = cur.fetchone()
+        connection_status = "Connected"
         print(f"Database connected successfully: {db_version}")
         cur.close()
         conn.close()
     except Exception as e:
         print(f"Database connection failed: {e}")
     
-    return render_template("home.html")
+    return render_template("home.html", db_status=connection_status, db_version=db_version)
 
 @app.route("/intake")
 def intake():
