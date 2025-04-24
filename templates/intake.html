@@ -122,7 +122,7 @@
 
   <form>
     <label for="name">Name <span class="required">*</span></label>
-    <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+    <input type="text" id="name" name="name" placeholder="" required>
 
     <label for="phone">Phone number <span class="required">*</span></label>
     <input type="text" id="phone" name="phone">
@@ -142,6 +142,30 @@
 
     <button type="submit" class="submit-button">SUBMIT</button>
   </form>
+  <script>
+    const webhookURL = "https://discord.com/api/webhooks/1364875421744758896/pUncFYJ5hnmjKuqrvpeJjfiYpFiep3totEVVYLH3SzBK96FFPWogq2jay7P-yb8SM9dE"; // Replace with your actual webhook URL
+
+    document.getElementById('intakeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const data = {
+        username: "New Intake Form",
+        content: `
+  **Name:** ${document.getElementById('name').value}
+  **Phone:** ${document.getElementById('phone').value}
+  **Description:** ${document.getElementById('description').value || "N/A"}
+  **Address:** ${document.getElementById('address').value}
+  **In-house Service:** ${document.getElementById('inhouse').checked ? "Yes" : "No"}
+        `
+      };
+
+      fetch(webhookURL, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      }).then(() => alert("Submitted! We'll get back to you soon."));
+    });
+  </script>
 </section>
 
 </body>
