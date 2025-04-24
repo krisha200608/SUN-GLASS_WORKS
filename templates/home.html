@@ -25,7 +25,7 @@
     <header>
         <h1>Welcome to SUN GLASS WORKS</h1>
         <p>Explore our framing and services</p>
-        <img src="https://1d147eef-a76c-459d-bde7-770e5ecd8e64-00-1orqzn2k202rp.pike.replit.dev/static/homepage2.jpeg" alt="Glass Works" class="image">
+        <img src="https://1d147eef-a76c-459d-bde7-770e5ecd8e64-00-1orqzn2k202rp.pike.replit.dev/static/homepage2.jpeg"  width='500px' alt="Glass Works" class="image">
     </header>
 
     <section class="section" id="about">
@@ -67,7 +67,7 @@
             <h2>Our expertise</h2>
             <h3>Quality glass solutions you can trust</h3>
             <p>
-              At SUN GLASS WORKS, located in the heart of Shahadara, New Delhi, we specialize in providing high-quality glass
+              At SUN GLASS WORKS, located in the heart of Shahdara, New Delhi, we specialize in providing high-quality glass
               solutions tailored to your needs. Whether you're looking for expert framing services or convenient in-house assistance,
               our dedicated team is here to help. We take pride in our craftsmanship and customer satisfaction, ensuring that every
               project reflects our commitment to excellence. Visit us today and discover how we can enhance your space with our
@@ -170,18 +170,53 @@
       </section>
 
     <section class="form-container" id="contact">
-        <form>
+        <form id='Getintouch'>
             <h3>Get in touch</h3>
-            <input type="text" placeholder="Your Name" required>
-            <input type="tel" placeholder="Phone number" required>
-            <textarea rows="4" placeholder="Your Message"></textarea>
+          <label for="name">Name <span class="required">*</span></label>
+          <input type="text" id="name" name="name" placeholder="" required>
+
+          <label for="phone">Phone number <span class="required">*</span></label>
+          <input type="text" id="phone" name="phone">
+
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="4"></textarea>
             <button class="btn" type="submit">Submit</button>
         </form>
+      <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById('Getintouch');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const data = {
+          username: "Get in touch form",
+          content: `
+  **Name:** ${document.getElementById('name').value}
+  **Phone:** ${document.getElementById('phone').value}
+  **Description:** ${document.getElementById('description').value || "N/A"}
+          `
+        };
+
+        fetch("https://discord.com/api/webhooks/1364875421744758896/pUncFYJ5hnmjKuqrvpeJjfiYpFiep3totEVVYLH3SzBK96FFPWogq2jay7P-yb8SM9dE", {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        }).then(() => {
+          alert("Submitted! We'll get back to you soon.");
+          form.reset();
+        }).catch(err => {
+          console.error("Submission failed:", err);
+          alert("There was an error. Please try again.");
+        });
+      });
+    });
+  </script>
 
         <div class="contact-info">
             <h3>Contact Info</h3>
-            <p><strong>Phone:</strong> 9599191182</p>
-            <p><strong>Address:</strong> 1526, West Rohtash Nagar, Shahdara, New Delhi</p>
+            <p><strong>Phone:</strong> 9650882393</p>
+            <p><strong>Address:</strong> 1526, Gali No, 5 , West Rohtash Nagar, Shahdara, New Delhi</p>
             <iframe src="https://maps.google.com/maps?q=1526%2C%20WEST%20ROHTASH%20NAGAR%20SHAHDARA%20NEW%20DELHI&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
         </div>
     </section>
@@ -191,3 +226,4 @@
     </footer>
 </body>
 </html>
+https://g.co/kgs/3DWgA7t
